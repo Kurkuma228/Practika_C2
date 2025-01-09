@@ -1,178 +1,90 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
+using System.Collections.Generic;
+using System.Linq;
+using Из_Методички.classes;
+using Из_Методички.interfaces;
 
-namespace HomeWork
+namespace metodichka
 {
-    class File
+    class Program
     {
-        public static int Larger(int num1, int num2)
+        static void Main()
         {
-            if (num1 >= num2)
-            {
-                return num1;
-            }
-            else
-            {
-                return num2;
-            }
-        }
-        public static void Replacer(ref string a, ref string b)
-        {
-            (a, b) = (b, a);
-        }
-        public static long FactorialInt(long n)
-        {
-                if (n == 1) return 1;
-                return n * FactorialInt(n - 1);
-        }
-        public static bool FactorialBool(int n)
-        {
-            try
-            {
-                checked
-                {
-                    int f = 1;
-                    for (int i = 1; i <= n; i++)
-                    {
-                        f = i * f;
-                    }
-                    return true;
-                }
-            }
-            catch (OverflowException)
-            {
-                return false;
-            }
-        }
-        public static int Nod(int n1, int n2)
-        {
-            while (n1 != n2) 
-            {
-                if (n1 > n2)
-                {
-                    n1 -= n2;
-                }
-                else
-                {
-                    n2 -= n1;
-                }
-            }
-            return n1;
-        }
-        public static int Nod(int n1, int n2, int n3)
-        {
-            return Nod(Nod(n1, n2), n3);
-        }
-        public static long Fib(long n)
-        {
-            if ((n == 0) || (n == 1))
-            {
-                return n;
-            }
-            return Fib(n - 1) + Fib(n - 2);
-        }
-        static void Main(string[] args)
-        {
-            /*Упражнение 5.1 Написать метод, возвращающий наибольшее из двух чисел. Входные
-            параметры метода – два целых числа. Протестировать метод.*/
-            Console.WriteLine("Упражнение 5.1 (max)");
-            Console.WriteLine("Введите два целых числа");
-            try
-            {
-                int num1 = int.Parse(Console.ReadLine());
-                int num2 = int.Parse(Console.ReadLine());
-                Console.WriteLine($"Наибольшое число {Larger(num1, num2)}");
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Введен неверный формат");
-            }
+            Console.WriteLine("Упражнение 10.1");
+            Task1();
 
-            /*Упражнение 5.2 Написать метод, который меняет местами значения двух передаваемых
-            параметров. Параметры передавать по ссылке. Протестировать метод.*/
-            Console.WriteLine("\nУпражнение 5.2 (swap)");
-            Console.WriteLine("Введите два любых значения или слова");
-            string str1 = Console.ReadLine();
-            string str2 = Console.ReadLine();
-            Replacer(ref str1, ref str2);
-            Console.WriteLine($"Первое значение:{str1}\nВторое значение:{str2}");
+            Console.WriteLine("\nДомашнее задание 10.1");
+            Task2();
+        }
+        static void Task1()
+        {
+            /*Упражнение 10.1. Создать интерфейс ICipher, который определяет методы поддержки
+            шифрования строк. В интерфейсе объявляются два метода encode() и decode(), которые
+            используются для шифрования и дешифрования строк, соответственно. Создать класс
+            ACipher, реализующий интерфейс ICipher. Класс шифрует строку посредством сдвига
+            каждого символа на одну «алфавитную» позицию выше. Например, в результате такого
+            сдвига буква А становится буквой Б. Создать класс BCipher, реализующий интерфейс
+            ICipher. Класс шифрует строку, выполняя замену каждой буквы, стоящей в алфавите на i-й
+            позиции, на букву того же регистра, расположенную в алфавите на i-й позиции с конца
+            алфавита. Например, буква В заменяется на букву Э. Написать программу,
+            демонстрирующую функционирование классов.*/
 
-            /*Упражнение 5.3 Написать метод вычисления факториала числа, результат вычислений
-            передавать в выходном параметре. Если метод отработал успешно, то вернуть значение true;
-            если в процессе вычисления возникло переполнение, то вернуть значение false. Для
-            отслеживания переполнения значения использовать блок checked.*/
-            Console.WriteLine("\nУпражнение 5.3 (Факториал)");
-            Console.WriteLine("Введите число");
-            try
-            {
-                int numf = int.Parse(Console.ReadLine());
-                if (FactorialBool(numf))
-                {
-                    Console.WriteLine($"Факториал {numf} = {FactorialInt(numf)}");
-                    Console.WriteLine("true");
-                }
-                else
-                {
-                    Console.WriteLine("false");
-                }
-            }
-            catch(FormatException)
-            {
-                Console.WriteLine("Введено неверное значение числа");
-            }
-            /*Упражнение 5.4 Написать рекурсивный метод вычисления факториала числа.*/
-            Console.WriteLine("\nУпражнение 5.4 (Факториал)");
-            Console.WriteLine("Введите число");
-            try
-            {
-                int numr = int.Parse(Console.ReadLine());
-                Console.WriteLine(FactorialInt(numr));
-            }
-            catch(FormatException)
-            {
-                Console.WriteLine("Введен неверный формат");
-            }
-            catch(StackOverflowException)
-            {
-                Console.WriteLine("Рекурсия переполнена");
-            }
-            /*Домашнее задание 5.1 Написать метод, который вычисляет НОД двух натуральных чисел
-            (алгоритм Евклида). Написать метод с тем же именем, который вычисляет НОД трех
-            натуральных чисел.*/
-            Console.WriteLine("\nДомашнее задание 5.1 (НОД)");
-            try
-            {
-                Console.WriteLine("Введите два числа");
-                int numnod1 = int.Parse(Console.ReadLine());
-                int numnod2 = int.Parse(Console.ReadLine());
-                Console.WriteLine($"НОД двух чисел: {Nod(numnod1, numnod2)}");
+            Console.WriteLine("\nПервый метод шифрования");
+            ICipher aCipher = new ACipher();
+            string text = "Программирование убивает";
+            string encodedText = aCipher.Encode(text);
+            string decodedText = aCipher.Decode(encodedText);
 
-                Console.WriteLine("Ввдеите три числа");
-                numnod1 = int.Parse(Console.ReadLine());
-                numnod2 = int.Parse(Console.ReadLine());
-                int numnod3 = int.Parse(Console.ReadLine());
-                Console.WriteLine($"НОД трех чисел: {Nod(numnod3, numnod2, numnod1)}");
-            }
-            catch(FormatException)
-            {
-                Console.WriteLine("Неверный формат введенных данных");
-            }
-            /*Домашнее задание 5.2 Написать рекурсивный метод, вычисляющий значение n-го числа
-            ряда Фибоначчи. Ряд Фибоначчи – последовательность натуральных чисел 1, 1, 2, 3, 5, 8,
-            13... Для таких чисел верно соотношение Fk = Fk-1 + Fk-2 .*/
-            Console.WriteLine("\nДомашнее задание 5.2 (fib)");
-            Console.WriteLine("Введите число для вычисления Фиббоначи");
-            try
-            {
-                int fibnum = int.Parse(Console.ReadLine());
-                Console.WriteLine(Fib(fibnum));
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Введен неверный формат данных");
-            } 
-            
+            Console.WriteLine($"Изначально: {text}");
+            Console.WriteLine($"Закодировано: {encodedText}");
+            Console.WriteLine($"Декодировано: {decodedText}");
 
+            Console.WriteLine("\nВторой метод шифрования");
+            ICipher bCipher = new BCipher();
+            encodedText = bCipher.Encode(text);
+            decodedText = bCipher.Decode(encodedText);
+
+            Console.WriteLine($"Изначально: {text}");
+            Console.WriteLine($"Закодировано: {encodedText}");
+            Console.WriteLine($"Декодировано: {decodedText}");
+        }
+        static void Task2()
+        {
+            /*Домашнее задание 10.1. Создать класс Figure для работы с геометрическими фигурами. В
+            качестве полей класса задаются цвет фигуры, состояние «видимое/невидимое». Реализовать
+            операции: передвижение геометрической фигуры по горизонтали, по вертикали, изменение
+            цвета, опрос состояния (видимый/невидимый). Метод вывода на экран должен выводить
+            состояние всех полей объекта. Создать класс Point (точка) как потомок геометрической
+            фигуры. Создать класс Circle (окружность) как потомок точки. В класс Circle добавить
+            метод, который вычисляет площадь окружности. Создать класс Rectangle (прямоугольник)
+            как потомок точки, реализовать метод вычисления площади прямоугольника. Точка,
+            окружность, прямоугольник должны поддерживать методы передвижения по горизонтали и
+            вертикали, изменения цвета. Подумать, какие методы можно объявить в интерфейсе, нужно
+            ли объявлять абстрактный класс, какие методы и поля будут в абстрактном классе, какие
+            методы будут виртуальными, какие перегруженными.*/
+
+            Console.WriteLine("\nТочка:");
+            Point point = new Point(5, 10, "Красный", true);
+            point.Display();
+            point.MoveHorizontal(3);
+            point.MoveVertical(-2);
+            point.ChangeColor("Синий");
+            point.SetVisibility(false);
+            point.Display();
+
+            Console.WriteLine("\nКруг:");
+            Circle circle = new Circle(0, 0, 5, "Зеленый", true);
+            circle.Display();
+            circle.MoveHorizontal(10);
+            circle.ChangeColor("Желтый");
+            circle.Display();
+
+            Console.WriteLine("\nПрямоугольник:");
+            Rectangle rectangle = new Rectangle(2, 5, 4, 6, "Фиолетовый", true);
+            rectangle.Display();
+            rectangle.MoveVertical(5);
+            rectangle.SetVisibility(false);
+            rectangle.Display();
         }
     }
 }
